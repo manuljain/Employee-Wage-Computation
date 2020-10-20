@@ -7,30 +7,32 @@ echo "Welcome to Employee Wage Computation Program."
 # UC-2 Employee Daily wage
 # UC-3 Part Time Employee wage 
 # UC-4 Using switch case statement 
+# UC-5 Employee Monthly wage
 
 isPresent=1;
 isPartTime=1
 isFullTime=2
 wagePerhour=20
-
+daysPerMonth=20
 randomCheck=$((RANDOM%2))
 if [ $isPresent -eq $randomCheck ]
 then
-	empCheck=$((RANDOM%3))
-	case $empCheck in
-		$isFullTime)
-		empHrs=8
-		echo "employee is present and working full time"
-		;;
-		$isPartTime)
-		empHrs=4
-		echo "employee is present and working part time"
-		;;
-	esac
+        empCheck=$((RANDOM%3))
+        case $empCheck in
+                $isFullTime)
+                empHrs=8
+                echo "employee is present and working full time"
+                ;;
+                $isPartTime)
+                empHrs=8
+                echo "employee is present and working part time"
+                ;;
+        esac
 else
-	empHrs=0
-	echo "employee is Absent"
+        empHrs=0
+        echo "employee is Absent"
 
 fi
 wage=$((empHrs*wagePerhour))
-echo $wage
+monthlywage=$((wage*daysPerMonth))
+echo "monthly wage is $monthlywage"
