@@ -27,6 +27,10 @@ partTimePre=0
 absent=0
 maxHr=100
 totalDays=0
+counter=0
+
+declare -A dictSal
+declare -A dictTotalSal
 
 function getWorkingHr() {
 
@@ -61,6 +65,8 @@ do
 	totSalary=$(( totalEmpHr * empRatePerHr ))
 	sal[counter]=$salary
 	totalSal[counter]=$totSalary
+	dictSal[day $counter]=$salary
+	dictTotalSal[day $counter]=$totSalary
 	counter=$(( counter + 1 ))
 done
 
@@ -71,3 +77,19 @@ echo "Total Working Days : $totalDays  Total Working Hours : $totalEmpHr "
 echo "Total Salary for 20 days is $totSalary"
 echo "Array for Salary : ${sal[@]}"
 echo "Array for Total Salary : ${totalSal[@]}"
+
+echo ""
+echo "Day-wise Salary"
+
+for i in "${!dictSal[@]}"
+do
+	echo "$i" "${dictSal[$i]}"
+done
+
+echo ""
+echo "Day-Wise Total Salary"
+
+for i in "${!dictTotalSal[@]}"
+do
+	echo "$i" "${dictTotalSal[$i]}"
+done
