@@ -9,66 +9,60 @@ echo "Welcome to Employee Wage Computation Program."
 # UC-4 Using switch case statement 
 # UC-5 Employee Monthly wage
 # UC-6 Conditional wage
+# UC-7 Refactor the code with function
 
 # Variable declaration
-isPresent=1;
+#! /bin/bash
+
+#Variables declaration
+empAbsent=0
+empRatePerHr=20
 isPartTime=1
 isFullTime=2
+empHr=0
+empHr2=0
+totalEmpHr=0
+monthlydays=20
+totSalary=0
+fullTimePre=0
+partTimePre=0
 absent=0
-wagePerhour=20
-daysPerMonth=20
-emphrs=8
-ftempHrs=0
-ptempHrs=0
-fttotaldays=0
-pttotaldays=0
-randomCheck=$((RANDOM%2))
+maxHr=100
+totalDays=0
 
-while true
+function getWorkingHr() {
+
+	
+	case $1 in
+        	$isPartTime)
+            partTimePre=$(( partTimePre + 1 ))
+            empHr=4
+                	;;
+        	$isFullTime)
+			fullTimePre=$(( fullTimePre + 1 ))
+            empHr=8
+            ;;
+        	*)
+			absent=$(( absent + 1 ))
+            empHr=0
+            ;;
+	esac
+	
+	return $empHr
+
+}
+
+while [ $totalEmpHr -lt $maxHr -a $totalDays -lt $monthlydays ]
 do
-	if [ $isPresent -eq $randomCheck ]
-	then
-        	empCheck=$((RANDOM%3))
-        	case $empCheck in
-                	$isFullTime)
-                	ftempHrs=$((ftempHrs+8))
-                	fttotaldays=$((fttotaldays+1))
-                	;;
-                	$isPartTime)
-                	ptempHrs=$((ptempHrs+8))
-			        pttotaldays=$((pttotaldays+1))
-                	;;
-        	esac
-	else
-		echo "employee is absent and monthly wage is 0"
-		break
 
-	fi
-	if [ $ftempHrs -gt 100 ]
-	then
-		ftwage=$((ftempHrs*wagePerhour))
-		echo "monthly wage of full time employee is $ftwage"
-		break
-	elif [ $fttotaldays -gt $daysPerMonth ]
-	then
-		ftwage=$((emphrs*wagePerhour))
-		wage=$((ftwage*fttotaldays))
-		echo "monthly wage of full time employee is $wage"
-	elif [ $pttotaldays -gt $daysPerMonth ]
-        then
-                ptwage=$((emphrs*wagePerhour))
-                wage=$((ptwage*pttotaldays))
-                echo "monthly wage of part time employee is $wage"
-
-	elif [ $ptempHrs -gt 100 ]
-        then
-                ptwage=$((ptempHrs*wagePerhour))
-                echo "monthly wage of part time employee is $ptwage"
-		break
-
-	fi
-
+	totalDays=$(( totalDays + 1 ))
+	getWorkingHr $((RANDOM%3))
+	empHr2=`echo $?`
+	totalEmpHr=$(( totalEmpHr + empHr2 ))
 done
+
+totSalary=$(( totalEmpHr * empRatePerHr ))
 echo "EMPLOYEE DATA ::"
-echo "FullTimePresent days : $fttotaldays   PartTimePresent days : $pttotaldays  Absent days : $absent "
-echo "Total Working Days : 20  Total Working Hours : 100 "
+echo "FullTimePresent days : $fullTimePre  PartTimePresent days : $partTimePre  Absent days : $absent "
+echo "Total Working Days : $totalDays  Total Working Hours : $totalEmpHr "
+echo "Total Salary for 20 days is $totSalary"
