@@ -11,8 +11,6 @@ echo "Welcome to Employee Wage Computation Program."
 # UC-6 Conditional wage
 # UC-7 Refactor the code with function
 
-# Variable declaration
-#! /bin/bash
 
 #Variables declaration
 empAbsent=0
@@ -59,6 +57,11 @@ do
 	getWorkingHr $((RANDOM%3))
 	empHr2=`echo $?`
 	totalEmpHr=$(( totalEmpHr + empHr2 ))
+	salary=$(( empHr2 * empRatePerHr ))
+	totSalary=$(( totalEmpHr * empRatePerHr ))
+	sal[counter]=$salary
+	totalSal[counter]=$totSalary
+	counter=$(( counter + 1 ))
 done
 
 totSalary=$(( totalEmpHr * empRatePerHr ))
@@ -66,3 +69,5 @@ echo "EMPLOYEE DATA ::"
 echo "FullTimePresent days : $fullTimePre  PartTimePresent days : $partTimePre  Absent days : $absent "
 echo "Total Working Days : $totalDays  Total Working Hours : $totalEmpHr "
 echo "Total Salary for 20 days is $totSalary"
+echo "Array for Salary : ${sal[@]}"
+echo "Array for Total Salary : ${totalSal[@]}"
